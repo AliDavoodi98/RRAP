@@ -1,0 +1,4 @@
+# FILEPATH: /home/ubuntu/RRAP/requirements.txt
+praw=7.7.1
+python==3.10.12
+
