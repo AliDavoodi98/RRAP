@@ -2,4 +2,5 @@
 praw=7.7.1
 python==3.10.12
 python-dotenv==1.0.0
-
+zookeeperd
+kafka-python
