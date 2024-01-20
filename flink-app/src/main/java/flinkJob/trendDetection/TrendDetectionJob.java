@@ -40,7 +40,7 @@ public class TrendDetectionJob {
                 .setBootstrapServers("localhost:9092")
                 .setTopics("worldnews")
                 .setGroupId("flink-reddit-consumer")
-                .setStartingOffsets(OffsetsInitializer.earliest())
+                .setStartingOffsets(OffsetsInitializer.latest())
                 .setValueOnlyDeserializer(new SimpleStringSchema())
                 .build();
 
@@ -55,16 +55,21 @@ public class TrendDetectionJob {
         // return value;
         // }
         // });
-
+        // System.out.println(consumer.toString());
+        // DataStream<String> stream = env.fromSource(consumer,
+        // WatermarkStrategy.noWatermarks(), "Kafka Source")
+        // .map(new MapFunction<String, String>() {
+        // @Override
+        // public String map(String value) throws Exception {
+        // System.out.println("Received from Kafka: " + value);
+        // return value;
+        // }
+        // });
         DataStream<String> stream = env.fromSource(consumer,
-                WatermarkStrategy.noWatermarks(), "Kafka Source")
-                .map(new MapFunction<String, String>() {
-                    @Override
-                    public String map(String value) throws Exception {
-                        System.out.println("Received from Kafka: " + value);
-                        return value;
-                    }
-                });
+                WatermarkStrategy.noWatermarks(), "Kafka Source");
+
+        stream.print();
+        System.out.println("Alive!");
 
         DataStream<Trend> trends = stream
                 .map(json -> JsonParser.parseJsonPost(json)) // Parse JSON to Post objects
@@ -82,7 +87,7 @@ public class TrendDetectionJob {
                 });
 
         // Print the detected trends
-        trends.print();
+        // trends.print();
         // System.out.println("");
         // Execute the Flink job
         env.execute("Reddit World News Trend Detection");
