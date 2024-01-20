@@ -39,7 +39,24 @@ repositories {
     mavenCentral()
     jcenter()
 }
+
+jar {
+    manifest {
+        attributes(
+            'Main-Class': 'flinkJob.trendDetection.TrendDetectionJob'
+        )
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
 dependencies {
-    implementation 'org.apache.flink:flink-streaming-java_2.12:1.12.0'
-    implementation 'org.apache.flink:flink-connector-kafka_2.12:1.12.0'
+    // Make sure to use the correct Scala binary version for your Flink installation.
+    implementation 'org.apache.flink:flink-streaming-java_2.12:1.14.6'
+    implementation 'org.apache.flink:flink-connector-kafka_2.12:1.14.6'
+    implementation 'org.apache.flink:flink-clients_2.12:1.14.6'
+    
+    implementation 'org.json:json:20210307'
+    // Other dependencies...
 }

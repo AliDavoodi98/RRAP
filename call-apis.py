@@ -22,6 +22,7 @@ producer = KafkaProducer(bootstrap_servers=['localhost:9092'],
 for submission in reddit.subreddit('worldnews').stream.submissions():
     message = {
         'title': submission.title,
+        'id': submission.id,
         'created_utc': submission.created_utc,
         'upvotes': submission.score
     }
