@@ -14,6 +14,7 @@ import org.apache.flink.streaming.api.windowing.assigners.TumblingProcessingTime
 //import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer;
 import org.apache.flink.util.Collector;
 
+import java.net.Socket;
 import java.util.Properties;
 import flinkJob.aggregator.TrendAggregator;
 import flinkJob.model.Post;
@@ -26,21 +27,31 @@ public class TrendDetectionJob {
         final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
         // Configure Kafka consumer
-        Properties props = new Properties();
-        props.setProperty("bootstrap.servers", "localhost:9092"); // Kafka broker address
-        props.setProperty("group.id", "flink-reddit-consumer");
+        // Properties props = new Properties();
+        // props.setProperty("bootstrap.servers", "localhost:9092"); // Kafka broker
+        // address
+        // props.setProperty("group.id", "flink-reddit-consumer");
 
         // Set up the Kafka source
         // FlinkKafkaConsumer<String> consumer = new FlinkKafkaConsumer<>(
         // "worldnews",
         // new SimpleStringSchema(),
         // props);
+        // String kafkaHost = "localhost";
+        // int kafkaPort = 9092;
+
+        // try (Socket socket = new Socket(kafkaHost, kafkaPort)) {
+        // System.out.println("Successfully connected to Kafka on port " + kafkaPort);
+        // } catch (Exception e) {
+        // System.out.println("Failed to connect to Kafka on port " + kafkaPort);
+        // e.printStackTrace();
+        // }
 
         KafkaSource<String> consumer = KafkaSource.<String>builder()
                 .setBootstrapServers("localhost:9092")
                 .setTopics("worldnews")
                 .setGroupId("flink-reddit-consumer")
-                .setStartingOffsets(OffsetsInitializer.latest())
+                .setStartingOffsets(OffsetsInitializer.earliest())
                 .setValueOnlyDeserializer(new SimpleStringSchema())
                 .build();
 
@@ -68,8 +79,8 @@ public class TrendDetectionJob {
         DataStream<String> stream = env.fromSource(consumer,
                 WatermarkStrategy.noWatermarks(), "Kafka Source");
 
-        stream.print();
-        System.out.println("Alive!");
+        // stream.print();
+        // System.out.println("Alive!");
 
         DataStream<Trend> trends = stream
                 .map(json -> JsonParser.parseJsonPost(json)) // Parse JSON to Post objects
@@ -79,15 +90,14 @@ public class TrendDetectionJob {
                 .flatMap(new FlatMapFunction<Trend, Trend>() {
                     @Override
                     public void flatMap(Trend trend, Collector<Trend> out) throws Exception {
-                        System.out.println(trend.getTitle());
-                        if (trend != null) {
+                        if (trend.getUpvotes() > 1000) {
                             out.collect(trend);
                         }
                     }
                 });
 
         // Print the detected trends
-        // trends.print();
+        trends.print();
         // System.out.println("");
         // Execute the Flink job
         env.execute("Reddit World News Trend Detection");

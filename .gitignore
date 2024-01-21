@@ -1,3 +1,4 @@
 .env
-flink-app.tar 
-flink-app.zip
+flink-app/build/libs/*.jar
+flink-app/build/distributions/*.tar
+

@@ -56,7 +56,7 @@ dependencies {
     implementation 'org.apache.flink:flink-streaming-java_2.12:1.14.6'
     implementation 'org.apache.flink:flink-connector-kafka_2.12:1.14.6'
     implementation 'org.apache.flink:flink-clients_2.12:1.14.6'
-    
+    implementation 'software.amazon.awssdk:timestreamwrite:2.15.12'
     implementation 'org.json:json:20210307'
     // Other dependencies...
 }
