@@ -1,4 +1,5 @@
 .env
 flink-app/build/libs/*.jar
 flink-app/build/distributions/*.tar
+flink-app/build/distributions/*.zip
 
