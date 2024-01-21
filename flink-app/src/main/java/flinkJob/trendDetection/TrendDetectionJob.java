@@ -19,6 +19,7 @@ import java.util.Properties;
 import flinkJob.aggregator.TrendAggregator;
 import flinkJob.model.Post;
 import flinkJob.model.Trend;
+import flinkJob.timeStreamSink.TimeStreamSink;
 import flinkJob.util.JsonParser;
 
 public class TrendDetectionJob {
@@ -98,6 +99,7 @@ public class TrendDetectionJob {
 
         // Print the detected trends
         trends.print();
+        trends.addSink(new TimeStreamSink());
         // System.out.println("");
         // Execute the Flink job
         env.execute("Reddit World News Trend Detection");
