@@ -26,10 +26,12 @@ public class JdbcSink extends RichSinkFunction<Trend> {
 
         String dbUser = dotenv.get("DB_USER"); // Replace with your variable name
         String dbPassword = dotenv.get("DB_PASSWORD"); // Replace with your variable name
+        String trendDB = dotenv.get("trendDB"); // Replace with your variable name
+        String dbInstance = dotenv.get("my-trend-db-instance"); // Replace with your variable name
         // Now you can use myVar as needed
 
         // Initialize the connection to the database
-        String url = "jdbc:mysql://your-rds-instance:3306/yourdatabase";
+        String url = "jdbc:mysql://" + dbInstance + ":3306/" + trendDB;
 
         connection = DriverManager.getConnection(url, dbUser, dbPassword);
         insertStatement = connection

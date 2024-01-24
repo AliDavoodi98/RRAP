@@ -17,6 +17,7 @@ import org.apache.flink.util.Collector;
 import java.net.Socket;
 import java.util.Properties;
 import flinkJob.aggregator.TrendAggregator;
+import flinkJob.jdbcSink.JdbcSink;
 import flinkJob.model.Post;
 import flinkJob.model.Trend;
 import flinkJob.timeStreamSink.TimeStreamSink;
@@ -99,7 +100,7 @@ public class TrendDetectionJob {
 
         // Print the detected trends
         trends.print();
-        trends.addSink(new TimeStreamSink());
+        trends.addSink(new JdbcSink());
         // System.out.println("");
         // Execute the Flink job
         env.execute("Reddit World News Trend Detection");
