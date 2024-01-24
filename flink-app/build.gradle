@@ -56,7 +56,9 @@ dependencies {
     implementation 'org.apache.flink:flink-streaming-java_2.12:1.14.6'
     implementation 'org.apache.flink:flink-connector-kafka_2.12:1.14.6'
     implementation 'org.apache.flink:flink-clients_2.12:1.14.6'
+    implementation 'io.github.cdimascio:dotenv-java:3.0.0'
     implementation 'software.amazon.awssdk:timestreamwrite:2.15.12'
+    implementation 'mysql:mysql-connector-java:8.0.23'
     implementation 'org.json:json:20210307'
     // Other dependencies...
 }
