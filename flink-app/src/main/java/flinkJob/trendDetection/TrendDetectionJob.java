@@ -28,26 +28,7 @@ public class TrendDetectionJob {
     public static void main(String[] args) throws Exception {
         final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
-        // Configure Kafka consumer
-        // Properties props = new Properties();
-        // props.setProperty("bootstrap.servers", "localhost:9092"); // Kafka broker
-        // address
-        // props.setProperty("group.id", "flink-reddit-consumer");
-
         // Set up the Kafka source
-        // FlinkKafkaConsumer<String> consumer = new FlinkKafkaConsumer<>(
-        // "worldnews",
-        // new SimpleStringSchema(),
-        // props);
-        // String kafkaHost = "localhost";
-        // int kafkaPort = 9092;
-
-        // try (Socket socket = new Socket(kafkaHost, kafkaPort)) {
-        // System.out.println("Successfully connected to Kafka on port " + kafkaPort);
-        // } catch (Exception e) {
-        // System.out.println("Failed to connect to Kafka on port " + kafkaPort);
-        // e.printStackTrace();
-        // }
 
         KafkaSource<String> consumer = KafkaSource.<String>builder()
                 .setBootstrapServers("localhost:9092")
@@ -58,31 +39,8 @@ public class TrendDetectionJob {
                 .build();
 
         // Define the data processing pipeline
-        // DataStream<String> stream = env.addSource(consumer);
-
-        // DataStream<String> stream = env.addSource(consumer)
-        // .map(new MapFunction<String, String>() {
-        // @Override
-        // public String map(String value) throws Exception {
-        // System.out.println("Received from Kafka: " + value);
-        // return value;
-        // }
-        // });
-        // System.out.println(consumer.toString());
-        // DataStream<String> stream = env.fromSource(consumer,
-        // WatermarkStrategy.noWatermarks(), "Kafka Source")
-        // .map(new MapFunction<String, String>() {
-        // @Override
-        // public String map(String value) throws Exception {
-        // System.out.println("Received from Kafka: " + value);
-        // return value;
-        // }
-        // });
         DataStream<String> stream = env.fromSource(consumer,
                 WatermarkStrategy.noWatermarks(), "Kafka Source");
-
-        // stream.print();
-        // System.out.println("Alive!");
 
         DataStream<Trend> trends = stream
                 .map(json -> JsonParser.parseJsonPost(json)) // Parse JSON to Post objects
@@ -92,7 +50,7 @@ public class TrendDetectionJob {
                 .flatMap(new FlatMapFunction<Trend, Trend>() {
                     @Override
                     public void flatMap(Trend trend, Collector<Trend> out) throws Exception {
-                        if (trend.getUpvotes() > 1000) {
+                        if (trend.getUpvotes() > 100) {
                             out.collect(trend);
                         }
                     }
@@ -101,9 +59,9 @@ public class TrendDetectionJob {
         // Print the detected trends
         trends.print();
         trends.addSink(new JdbcSink());
-        // System.out.println("");
+
         // Execute the Flink job
-        env.execute("Reddit World News Trend Detection");
+        env.execute("Worldnews Subreddit Trend Detection");
     }
 
 }
