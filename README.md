@@ -50,15 +50,15 @@ To get this project up and running on your system, follow these steps:
             bin/kafka-topics.sh --create --topic worldnews --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1
             ```
             
-         5. Use a Process Manager to Automatically Publish Data to Kafka Topics:
-            - To ensure that your Kafka broker starts automatically when the EC2 instance boots, you can create a systemd service unit for Kafka:
+         5. Use a Process Manager to Start Kafka Broker Automatically:
+            * To ensure that your Kafka broker starts automatically when the EC2 instance boots, you can create a systemd service unit for Kafka:
             Create a new service file in /etc/systemd/system/, e.g., kafka.service:
 
             ```sh
-            sudo nano /etc/systemd/system/kafka.service
+            sudo nano /etc/systemd/system/kafka_broker.service
             ```
             
-            Add the following content to the file, making sure to replace ```/path/to/kafka``` with the actual directory path where Kafka is installed:
+            * Add the following content to the file, making sure to replace ```/path/to/kafka``` with the actual directory path where Kafka is installed:
 
             ```ini
             [Unit]
@@ -77,3 +77,36 @@ To get this project up and running on your system, follow these steps:
             [Install]
             WantedBy=multi-user.target
             ```
+
+            * After that, type following commands to Enable and Start Kafka Service:
+            
+            ```sh
+            sudo systemctl daemon-reload
+            sudo systemctl enable kafka_broker.service
+            sudo systemctl start kafka_broker.service
+            ```
+            
+      5. Use a Process Manager to Automatically Publish Data to Kafka Topics:
+         * Create a new service file in ```/etc/systemd/system/```, e.g., ```call_reddit_kafka.service```:
+
+         ```sh
+         sudo nano /etc/systemd/system/call_reddit_kafka.service
+          ```
+         
+         * Add following to the file:
+           
+         ```sh
+         [Unit]
+         Description=Reddit Kafka Service
+         After=network.target
+
+         [Service]
+         User=ec2-user
+         ExecStart=/usr/bin/python3 /path/to/call-apis.py
+         Restart=always
+
+         [Install]
+         WantedBy=multi-user.target
+         ```
+         
+      
