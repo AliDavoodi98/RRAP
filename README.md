@@ -1,4 +1,4 @@
-# RRAP (Realtime Reddit Analysis Platform)
+# RRAP (Real-time Reddit Analysis Platform)
 
 A real-time trend analysis platform for Reddit's worldnews subreddit, capable of processing and visualizing the popularity of topics over time.
 
