@@ -30,10 +30,10 @@ public class JdbcSink extends RichSinkFunction<Trend> {
 
         Class.forName("com.mysql.jdbc.Driver");
 
-        String dbUser = dotenv.get("DB_USER"); // Replace with your variable name
-        String dbPassword = dotenv.get("DB_PASSWORD"); // Replace with your variable name
-        String trendDB = dotenv.get("DB_NAME"); // Replace with your variable name
-        String dbInstance = dotenv.get("DB_INSTANCE"); // Replace with your variable name
+        String dbUser = dotenv.get("DB_USER");
+        String dbPassword = dotenv.get("DB_PASSWORD");
+        String trendDB = dotenv.get("DB_NAME");
+        String dbInstance = dotenv.get("DB_INSTANCE");
         // Now you can use myVar as needed
 
         // Initialize the connection to the database
