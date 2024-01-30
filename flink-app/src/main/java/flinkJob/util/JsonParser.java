@@ -17,7 +17,7 @@ public class JsonParser {
             return new Post(title, postId, timestamp, upvotes);
         } catch (Exception e) {
             System.err.println("Error parsing JSON: " + e.getMessage());
-            return null; // or handle the error as appropriate
+            return null;
         }
     }
 }

@@ -59,8 +59,6 @@ public class TrendAccumulator {
         return 10.0; // Example threshold
     }
 
-    // Other methods like 'merge' would go here...
-
     // Helper class to store stats for a post
     public static class PostStats {
         private String title;
@@ -96,6 +94,5 @@ public class TrendAccumulator {
             this.lastTimestamp = lastTimestamp;
         }
 
-        // Add any other methods or logic required for managing post statistics
     }
 }

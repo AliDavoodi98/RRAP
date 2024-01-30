@@ -34,7 +34,6 @@ public class JdbcSink extends RichSinkFunction<Trend> {
         String dbPassword = dotenv.get("DB_PASSWORD");
         String trendDB = dotenv.get("DB_NAME");
         String dbInstance = dotenv.get("DB_INSTANCE");
-        // Now you can use myVar as needed
 
         // Initialize the connection to the database
         String url = "jdbc:mysql://" + dbInstance + ":3306/" + trendDB;

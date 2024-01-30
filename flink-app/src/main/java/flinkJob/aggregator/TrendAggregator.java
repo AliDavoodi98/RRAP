@@ -74,9 +74,7 @@ public class TrendAggregator implements AggregateFunction<Post, TrendAccumulator
     }
 
     private double calculateUpvoteRate(TrendAccumulator.PostStats stats) {
-        // Implement your logic to calculate the rate of upvotes
-        // For example, upvotes per minute/hour since the post was created
-        // This is a placeholder implementation
+        // Sample logic to calculate the rate of upvotes
         return (double) stats.getLastUpvoteCount()
                 / ((System.currentTimeMillis() - stats.getLastTimestamp()) / 60000.0);
     }
