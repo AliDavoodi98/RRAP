@@ -116,10 +116,10 @@ To get this project up and running on your system, follow these steps:
             ``` ./gradlew jar ```
          * Submit the JAR to your Flink cluster using the Flink CLI:
            ``` ./bin/flink run -c flinkJob.trendDetection.TrendDetectionJob ~/RRAP/flink-app/build/libs/flink-app.jar```
-         * Monitor the Flink Dashboard at ```http://localhost:8081``` to see your job's status and metrics.
+         * Monitor the Flink Dashboard at [http://localhost:8081]([http://localhost:8081]) to see your job's status and metrics.
            ##### Important Note: Ensure that the Apache Flink dashboard is accessible on port 8081.
-         Optional:
-            Automate Flink Start on Boot:
+         **[Optional]**
+         Automate Flink Start on Boot:
            <details><summary><b>Show instructions</b></summary>  
               * Create a Flink Service File (/etc/systemd/system/flink_listener.service):
                  
@@ -148,5 +148,34 @@ To get this project up and running on your system, follow these steps:
                sudo systemctl start flink_listener.service
               ```
       
-      7.
+      8. RDS Database:
+         * Specify your AWS credentials, in your ```.env``` file like the following:
+            ```.env
+            DB_USER="Your-RDS-User"
+            DB_PASSWORD="Your-RDS-Password"
+            DB_INSTANCE="Your-RDS-Instance-Endpoint"
+            DB_NAME="Your-RDS-DB-Name"
+            ```
+         * After your RDS instance is up and running, connect to it using a MySQL client and create your database and table. Here is the SQL command you would use:
+            ```SQL
+            CREATE DATABASE IF NOT EXISTS DB_NAME;
+
+            USE DB_NAME;
+
+            CREATE TABLE IF NOT EXISTS DB_TABLE (
+             trend_id INT AUTO_INCREMENT PRIMARY KEY,
+             title VARCHAR(255) NOT NULL,
+             upvotes INT NOT NULL,
+             timestamp DATE_FORMAT NOT NULL
+            );
+
+            ```
+         * Ensure you're security group allows inbound and outbound traffic for the port ```3306```.
+           
+      9. Grafana Dashboard:
+          * Install Grafana and Run Grafana Dashboard:
+            Follow the instructions in this [link](https://grafana.com/docs/grafana/latest/setup-grafana/installation/debian/).
+          * Ensure you're security group allows inbound traffic for the port ```3000```.
+          * Open Grafana dashboard at [http://localhost:3000]([http://localhost:3000]) to make your visualizations.
+              
       
