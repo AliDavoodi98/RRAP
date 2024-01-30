@@ -13,5 +13,5 @@ A real-time trend analysis platform for Reddit's worldnews subreddit, capable of
 Before you begin, ensure you meet the following requirements:
    - Java 8 or higher is installed on your system.
    - An active AWS account with an RDS instance setup.
-   - Apache Flink is installed and configured on your system or in your cloud environment.
+   - Apache Flink and Kafka are installed and configured on your system or in your cloud environment.
    - Grafana is installed and configured for visualizing the processed data.
