@@ -26,10 +26,11 @@ To get this project up and running on your system, follow these steps:
       ```
 
    2. Access Reddit Data Stream:
-         Reddit offers a vast stream of data from various subreddits that can be used for real-time analytics. 
+         - Reddit offers a vast stream of data from various subreddits that can be used for real-time analytics. 
          <details><summary><b>Show instructions</b></summary>
-          You can access Reddit's data through their API. To do this, you'll need to create a Reddit account, register an application, and get your API credentials (client ID, client secret, and user agent).
-          After that, Create a ```.env``` file in the root directory of the project and specify these arguments.
+            
+      1. You can access Reddit's data through their API. To do this, you'll need to create a Reddit account, register an application, and get your API credentials (client ID, client secret, and user agent).
+      2. Create a ```.env``` file in the root directory of the project and specify these arguments.
          ```
             REDDIT_CLIENT_ID='YOUR_CLIENT_ID'
             REDDIT_CLIENT_SECRET='YOUR_CLIENT_SECRE'
