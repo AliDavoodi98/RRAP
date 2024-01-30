@@ -44,13 +44,13 @@ To get this project up and running on your system, follow these steps:
             bin/kafka-server-start.sh config/server.properties
             ```
             
-         3. Create a Topic:
+         2. Create a Topic:
 
             ```sh
             bin/kafka-topics.sh --create --topic worldnews --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1
             ```
             
-         5. Use a Process Manager to Start Kafka Broker Automatically:
+         3. Use a Process Manager to Start Kafka Broker Automatically:
             * To ensure that your Kafka broker starts automatically when the EC2 instance boots, you can create a systemd service unit for Kafka:
             Create a new service file in /etc/systemd/system/, e.g., kafka.service:
 
@@ -109,4 +109,44 @@ To get this project up and running on your system, follow these steps:
          WantedBy=multi-user.target
          ```
          
+      6. Flink Stream Processing Application:
+         * In the root folder of Flink, start Flink's local cluster with the following command:
+            ``` ./bin/start-cluster.sh ```
+         * In the root folder of the app, compile your application into a JAR file.:
+            ``` ./gradlew jar ```
+         * Submit the JAR to your Flink cluster using the Flink CLI:
+           ``` ./bin/flink run -c flinkJob.trendDetection.TrendDetectionJob ~/RRAP/flink-app/build/libs/flink-app.jar```
+         * Monitor the Flink Dashboard at ```http://localhost:8081``` to see your job's status and metrics.
+           ##### Important Note: Ensure that the Apache Flink dashboard is accessible on port 8081.
+         Optional:
+            Automate Flink Start on Boot:
+           <details><summary><b>Show instructions</b></summary>  
+              * Create a Flink Service File (/etc/systemd/system/flink_listener.service):
+                 
+              ```ini
+                  [Unit]
+                  Description=Apache Flink
+                  After=network.target
+
+                  [Service]
+                  Type=simple
+                  User=ubuntu
+                  ExecStart=/path/to/flink/bin/start-cluster.sh
+                  ExecStop=/path/to/flink/bin/stop-cluster.sh
+                  Restart=on-failure
+                  RestartSec=10
+
+                  [Install]
+                  WantedBy=multi-user.target
+              ```
+              
+              * Enabel and start flink:
+
+              ```sh
+               sudo systemctl daemon-reload
+               sudo systemctl enable flink_listener.service
+               sudo systemctl start flink_listener.service
+              ```
+      
+      7.
       
