@@ -20,7 +20,6 @@ import flinkJob.aggregator.TrendAggregator;
 import flinkJob.jdbcSink.JdbcSink;
 import flinkJob.model.Post;
 import flinkJob.model.Trend;
-import flinkJob.timeStreamSink.TimeStreamSink;
 import flinkJob.util.JsonParser;
 
 public class TrendDetectionJob {
