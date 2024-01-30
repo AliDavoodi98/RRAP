@@ -15,3 +15,6 @@ Before you begin, ensure you meet the following requirements:
    - An active AWS account with an RDS instance setup.
    - Apache Flink and Kafka are installed and configured on your system or in your cloud environment.
    - Grafana is installed and configured for visualizing the processed data.
+Some necessary libraries' versions have been specified in the ```requirements.txt```
+
+## Installation
