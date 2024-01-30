@@ -1,4 +1,4 @@
-# RRAP
+# RRAP (Realtime Reddit Analysis Platform)
 
 A real-time trend analysis platform for Reddit's worldnews subreddit, capable of processing and visualizing the popularity of topics over time.
 
@@ -177,5 +177,24 @@ To get this project up and running on your system, follow these steps:
             Follow the instructions in this [link](https://grafana.com/docs/grafana/latest/setup-grafana/installation/debian/).
           * Ensure you're security group allows inbound traffic for the port ```3000```.
           * Open Grafana dashboard at [http://localhost:3000]([http://localhost:3000]) to make your visualizations.
+
+## Contributing
+
+Contributions to the Realtime Reddit Analysis Platform are welcome!
+
+   1. Fork the repository.
+   2. Create a new branch: ```git checkout -b branch_name.```
+   3. Make changes and test.
+   4. Submit Pull Request with comprehensive description of changes.
+
+## Contributors
+
+   @AliDavoodi98
+
+If you have any questions or want to reach out, please contact me at [LinkedIn](https://www.linkedin.com/in/ali-davoodi-moghadam) 
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
               
       
