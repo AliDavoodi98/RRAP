@@ -26,7 +26,7 @@ To get this project up and running on your system, follow these steps:
       ```
 
    2. Access Reddit Data Stream:
-         - Reddit offers a vast stream of data from various subreddits that can be used for real-time analytics. 
+         Reddit offers a vast stream of data from various subreddits that can be used for real-time analytics. 
          <details><summary><b>Show instructions</b></summary>
             
       1. You can access Reddit's data through their API. To do this, you'll need to create a Reddit account, register an application, and get your API credentials (client ID, client secret, and user agent).
@@ -36,4 +36,44 @@ To get this project up and running on your system, follow these steps:
             REDDIT_CLIENT_SECRET='YOUR_CLIENT_SECRE'
             REDDIT_USER_AGENT='YOUR_APP_NAME/version by /u/YOUR_REDDIT_USERNAME'
          ```
-   3. Running Apache Kafka: 
+   3. Running Apache Kafka:
+         1. Start the Kafka server:
+            Run this command in the root directory of installed Kafka:
+            
+            ```sh
+            bin/kafka-server-start.sh config/server.properties
+            ```
+            
+         3. Create a Topic:
+
+            ```sh
+            bin/kafka-topics.sh --create --topic worldnews --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1
+            ```
+            
+         5. Use a Process Manager to Automatically Publish Data to Kafka Topics:
+            - To ensure that your Kafka broker starts automatically when the EC2 instance boots, you can create a systemd service unit for Kafka:
+            Create a new service file in /etc/systemd/system/, e.g., kafka.service:
+
+            ```sh
+            sudo nano /etc/systemd/system/kafka.service
+            ```
+            
+            Add the following content to the file, making sure to replace ```/path/to/kafka``` with the actual directory path where Kafka is installed:
+
+            ```ini
+            [Unit]
+            Description=Apache Kafka Server
+            Documentation=http://kafka.apache.org/documentation.html
+            Requires=zookeeper.service
+            After=zookeeper.service
+
+            [Service]
+            Type=simple
+            User=kafka
+            ExecStart=/path/to/kafka/bin/kafka-server-start.sh /path/to/kafka/config/server.properties
+            ExecStop=/path/to/kafka/bin/kafka-server-stop.sh
+            Restart=on-abnormal
+
+            [Install]
+            WantedBy=multi-user.target
+            ```
