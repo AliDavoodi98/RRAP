@@ -189,9 +189,9 @@ Contributions to the Realtime Reddit Analysis Platform are welcome!
 
 ## Contributors
 
-   @AliDavoodi98
+   [@AliDavoodi98](https://github.com/AliDavoodi98)
 
-If you have any questions or want to reach out, please contact me at [LinkedIn](https://www.linkedin.com/in/ali-davoodi-moghadam) 
+If you have any questions or want to reach out, please contact me on [LinkedIn](https://www.linkedin.com/in/ali-davoodi-moghadam) 
 
 ## License
 
