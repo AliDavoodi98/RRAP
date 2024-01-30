@@ -18,3 +18,11 @@ Before you begin, ensure you meet the following requirements:
 Some necessary libraries' versions have been specified in the ```requirements.txt```
 
 ## Installation
+To get this project up and running on your system, follow these steps:
+   1. Clone the project repository:
+      ```sh
+      git clone https://github.com/yourusername/RRAP.git
+      ```
+   2. Access Reddit Data Stream:
+         Reddit offers a vast stream of data from various subreddits that can be used for real-time analytics. 
+         <details><summary><b>Show instructions</b></summary>
